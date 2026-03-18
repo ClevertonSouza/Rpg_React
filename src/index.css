@@ -1528,3 +1528,168 @@ select.form-input:disabled {
 }
 .mind-edge-ctrl-btn:hover { background: rgba(201,168,76,0.12); }
 .mind-edge-ctrl-del:hover { color: #c04a4a !important; }
+
+/* ═══════════════════════════════════════════════
+   MIND TEXT — nó de texto livre sem borda
+═══════════════════════════════════════════════ */
+.react-flow__node-mindText {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.mind-text-node {
+  width: 100%;
+  min-width: 80px;
+  min-height: 24px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: default;
+  padding: 2px 4px;
+  border: 1px dashed transparent;
+  border-radius: 4px;
+  transition: border-color 0.15s;
+}
+.mind-text-node:hover,
+.mind-text-node--selected {
+  border-color: rgba(201,168,76,0.25);
+}
+
+.mind-text-label {
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
+  font-family: 'Crimson Text', Georgia, serif;
+  user-select: none;
+}
+.mind-text-placeholder {
+  opacity: 0.35;
+  font-style: italic;
+  font-size: 0.85em;
+  color: var(--text-dim);
+}
+
+.mind-text-textarea {
+  width: 100%;
+  min-height: 24px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Crimson Text', Georgia, serif;
+  line-height: 1.5;
+  resize: none;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.mind-text-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  position: absolute;
+  top: -22px;
+  right: 0;
+  background: rgba(10,9,6,0.88);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 5px;
+  padding: 1px 3px;
+  z-index: 10;
+}
+.mind-text-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text-dim);
+  transition: background 0.12s, color 0.12s;
+  line-height: 1.4;
+  font-weight: 700;
+}
+.mind-text-btn:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+.mind-text-del:hover { color: #c04a4a !important; }
+
+/* ═══════════════════════════════════════════════
+   DRAW MODE — overlay, preview e seletor de cor
+═══════════════════════════════════════════════ */
+.mindmap-draw-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: crosshair;
+}
+.mindmap-draw-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+.mindmap-draw-colors {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 2px;
+}
+.mindmap-draw-color-btn {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: border-color 0.12s, transform 0.12s;
+}
+.mindmap-draw-color-btn.active {
+  border-color: #fff;
+  transform: scale(1.3);
+}
+
+/* ═══════════════════════════════════════════════
+   MIND DRAW — nó de desenho livre
+═══════════════════════════════════════════════ */
+.react-flow__node-mindDraw {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.mind-draw-node {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed transparent;
+  border-radius: 4px;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.mind-draw-node--selected {
+  border-color: rgba(201,168,76,0.3);
+}
+.mind-draw-del {
+  position: absolute;
+  top: -22px;
+  right: 0;
+  background: rgba(10,9,6,0.88);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 4px;
+  color: var(--text-dim);
+  font-size: 13px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.12s;
+}
+.mind-draw-del:hover { color: #c04a4a; }
