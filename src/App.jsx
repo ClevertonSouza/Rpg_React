@@ -8,7 +8,7 @@ import Equipment from './components/Equipment';
 import Powers from './components/Powers';
 import Spells from './components/Spells';
 import Notes from './components/Notes';
-import AuthPanel from './components/AuthPanel';
+import CharacterSelector from './components/CharacterSelector';
 
 const TABS = [
   { key: 'poderes', label: 'Poderes' },
@@ -19,9 +19,48 @@ const TABS = [
 ];
 
 export default function App() {
-  const { user } = useAuth();
-  const [char, setChar, synced] = useCharacterData(user?.uid ?? null);
+  const { user, login, logout } = useAuth();
+  const [characterId, setCharacterId] = useState(null);
+  const [char, setChar, synced] = useCharacterData(user?.uid ?? null, characterId);
   const [activeTab, setActiveTab] = useState('poderes');
+
+  // Loading auth state
+  if (user === undefined) {
+    return (
+      <div className="login-page">
+        <div className="login-logo">⚔</div>
+        <h1 className="login-title">Lorian Sheet</h1>
+        <p className="login-sub">Carregando...</p>
+      </div>
+    );
+  }
+
+  // Not logged in → show login screen
+  if (!user) {
+    return (
+      <div className="login-page">
+        <div className="login-logo">⚔</div>
+        <h1 className="login-title">Lorian Sheet</h1>
+        <p className="login-sub">Gerencie suas fichas de personagem na nuvem</p>
+        <button className="btn btn-gold login-btn" onClick={login}>
+          <svg width="18" height="18" viewBox="0 0 533 533" fill="currentColor" style={{ flexShrink: 0 }}>
+            <path d="M533 272q0 93-65 158t-171 65q-109 0-181-80H93v-80H0v-80h93q0-40 11-77H93V98h81q51-98 159-98 90 0 151 64l-57 57q-39-43-94-43-62 0-104 39l159 160q34-17 53-50h-91v-78h186q6 24 6 45z"/>
+          </svg>
+          Entrar com Google
+        </button>
+      </div>
+    );
+  }
+
+  // Logged in but no character selected → show selector
+  if (!characterId) {
+    return (
+      <CharacterSelector
+        user={user}
+        onSelect={(id) => { setCharacterId(id); setActiveTab('poderes'); }}
+      />
+    );
+  }
 
   const updateChar = (newChar) => setChar(newChar);
 
@@ -31,7 +70,14 @@ export default function App() {
 
   return (
     <>
-      <Header char={char} onChange={updateChar} />
+      <Header
+        char={char}
+        onChange={updateChar}
+        user={user}
+        synced={synced}
+        onLogout={() => { logout(); setCharacterId(null); }}
+        onSwitchChar={() => setCharacterId(null)}
+      />
 
       <div className="main-grid">
         {/* LEFT COL */}
@@ -149,7 +195,6 @@ export default function App() {
           )}
         </div>
       </div>
-      <AuthPanel />
     </>
   );
 }

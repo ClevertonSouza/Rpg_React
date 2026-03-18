@@ -655,3 +655,208 @@ body {
 ::-webkit-scrollbar-track { background: var(--dark-bg); }
 ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+/* ── Header user bar ── */
+.header-user-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 30px;
+  border-bottom: 1px solid var(--card-border);
+  background: rgba(0,0,0,0.3);
+}
+.header-user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  flex-shrink: 0;
+}
+.header-username {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75em;
+  color: var(--text-dim);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.header-synced {
+  font-size: 0.7em;
+  color: var(--green-light);
+}
+.header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ── Login page ── */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: linear-gradient(160deg, #0a0804 0%, #12100c 60%, #0a0804 100%);
+  text-align: center;
+  padding: 20px;
+}
+.login-logo {
+  font-size: 4em;
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(201,168,76,0.4);
+}
+.login-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2.4em;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 4px;
+}
+.login-sub {
+  font-size: 0.95em;
+  color: var(--text-dim);
+  max-width: 360px;
+}
+.login-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  font-size: 0.85em;
+  margin-top: 8px;
+}
+
+/* ── Character selector page ── */
+.selector-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: linear-gradient(160deg, #0a0804 0%, #12100c 60%, #0a0804 100%);
+  padding: 40px 20px;
+}
+.selector-container {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.selector-logo {
+  font-size: 2.5em;
+  color: var(--gold);
+}
+.selector-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 3px;
+}
+.selector-subtitle {
+  font-size: 0.9em;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+}
+.selector-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.selector-section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7em;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.selector-create-row {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.selector-new-input {
+  flex: 1;
+}
+.selector-empty {
+  font-size: 0.9em;
+  color: var(--text-dim);
+  font-style: italic;
+  text-align: center;
+  padding: 24px 0;
+}
+.selector-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.selector-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+.selector-item:hover {
+  border-color: var(--gold);
+}
+.selector-item-info {
+  flex: 1;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.selector-item-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1em;
+  color: var(--gold-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.selector-item-date {
+  font-size: 0.72em;
+  color: var(--text-dim);
+}
+.selector-item-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.selector-item-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+.selector-confirm-text {
+  font-size: 0.85em;
+  color: var(--red-light);
+  flex: 1;
+}
+
+@media (max-width: 500px) {
+  .header-user-bar { padding: 6px 14px; }
+  .header-username { max-width: 100px; }
+  .selector-page { padding: 24px 14px; }
+}
