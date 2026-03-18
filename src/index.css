@@ -898,8 +898,148 @@ select.form-input:disabled {
   flex: 1;
 }
 
+/* ── Ações do header do selector (botões Nova Ficha + Importar PDF) ── */
+.selector-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Botão outlineed neutro ── */
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── Status de parsing ── */
+.pdf-import-status {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── Erro de importação ── */
+.pdf-import-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82em;
+  color: var(--red-light);
+  background: rgba(200,50,50,0.08);
+  border: 1px solid rgba(200,50,50,0.3);
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+/* ── Overlay de preview de importação ── */
+.pdf-import-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.pdf-import-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.pdf-import-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0 0 6px;
+}
+
+.pdf-import-subtitle {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+}
+
+.pdf-import-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin-bottom: 16px;
+}
+
+.pdf-import-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pdf-import-label {
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.pdf-import-value {
+  font-size: 0.95em;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.pdf-import-attrs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: var(--bg-section);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+}
+
+.pdf-import-attr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 44px;
+  gap: 2px;
+}
+
+.pdf-import-attr-name {
+  font-size: 0.7em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.pdf-import-attr-val {
+  font-size: 1.1em;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.pdf-import-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
 @media (max-width: 500px) {
   .header-user-bar { padding: 6px 14px; }
   .header-username { max-width: 100px; }
   .selector-page { padding: 24px 14px; }
+  .pdf-import-grid { grid-template-columns: 1fr; }
+  .selector-header-actions { gap: 6px; }
 }

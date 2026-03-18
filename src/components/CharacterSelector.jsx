@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCharacterList } from '../hooks/useCharacterList';
+import ImportPdfButton from './ImportPdfButton';
 
 export default function CharacterSelector({ user, onSelect }) {
   const { characters, loading, createCharacter, deleteCharacter } = useCharacterList(user?.uid);
@@ -14,6 +15,14 @@ export default function CharacterSelector({ user, onSelect }) {
     const id = await createCharacter(newName);
     setNewName('');
     setCreating(false);
+    setBusy(false);
+    onSelect(id);
+  };
+
+  const handleImportPdf = async (charData) => {
+    if (busy) return;
+    setBusy(true);
+    const id = await createCharacter(charData.name, charData);
     setBusy(false);
     onSelect(id);
   };
@@ -40,11 +49,14 @@ export default function CharacterSelector({ user, onSelect }) {
 
         <div className="selector-header">
           <span className="selector-section-label">Suas Fichas</span>
-          {!creating && (
-            <button className="btn btn-gold" onClick={() => setCreating(true)}>
-              + Nova Ficha
-            </button>
-          )}
+          <div className="selector-header-actions">
+            {!creating && (
+              <button className="btn btn-gold" onClick={() => setCreating(true)}>
+                + Nova Ficha
+              </button>
+            )}
+            <ImportPdfButton onImport={handleImportPdf} disabled={busy || creating} />
+          </div>
         </div>
 
         {creating && (

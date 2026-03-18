@@ -33,12 +33,15 @@ export function useCharacterList(userId) {
     return () => unsub();
   }, [userId]);
 
-  const createCharacter = async (name) => {
+  const createCharacter = async (name, initialData = null) => {
     const trimmed = name.trim() || 'Novo Personagem';
     const ref = collection(db, 'users', userId, 'characters');
+    const charData = initialData
+      ? { ...defaultCharacter, ...initialData, name: initialData.name || trimmed }
+      : { ...defaultCharacter, name: trimmed };
     const docRef = await addDoc(ref, {
-      name: trimmed,
-      character: { ...defaultCharacter, name: trimmed },
+      name: charData.name,
+      character: charData,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
