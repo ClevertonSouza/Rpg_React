@@ -695,6 +695,49 @@ body {
   gap: 6px;
 }
 
+/* ── Header char row ── */
+.header-char-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 30px 20px;
+  position: relative;
+}
+.header-edit-btn {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ── Form helpers ── */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  gap: 10px;
+}
+.form-label-hint {
+  font-size: 0.8em;
+  color: var(--text-dim);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7d65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
+select.form-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* ── Login page ── */
 .login-page {
   min-height: 100vh;
