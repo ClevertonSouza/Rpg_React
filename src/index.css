@@ -1622,6 +1622,9 @@ select.form-input:disabled {
   inset: 0;
   z-index: 5;
   cursor: crosshair;
+  touch-action: none; /* impede scroll/pan do browser durante o desenho */
+  -webkit-user-select: none;
+  user-select: none;
 }
 .mindmap-draw-preview {
   position: absolute;

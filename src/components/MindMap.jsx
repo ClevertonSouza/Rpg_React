@@ -87,6 +87,21 @@ function MindMapCanvas({ nodes: initNodes, edges: initEdges, onChange }) {
     return () => window.removeEventListener('keydown', handler);
   }, [drawMode]);
 
+  // Bloqueia scroll/pan do Safari iOS durante o desenho (Apple Pencil).
+  // Precisa ser { passive: false } para poder chamar preventDefault().
+  const overlayRef = useRef(null);
+  useEffect(() => {
+    const el = overlayRef.current;
+    if (!el || !drawMode) return;
+    const prevent = (e) => e.preventDefault();
+    el.addEventListener('touchstart', prevent, { passive: false });
+    el.addEventListener('touchmove',  prevent, { passive: false });
+    return () => {
+      el.removeEventListener('touchstart', prevent);
+      el.removeEventListener('touchmove',  prevent);
+    };
+  }, [drawMode]);
+
   const onConnect = useCallback((params) => {
     setEdges(eds => addEdge({ ...params, ...NEW_EDGE }, eds));
   }, [setEdges]);
@@ -308,10 +323,12 @@ function MindMapCanvas({ nodes: initNodes, edges: initEdges, onChange }) {
         {/* Overlay captura eventos de ponteiro em modo desenho */}
         {drawMode && (
           <div
+            ref={overlayRef}
             className="mindmap-draw-overlay"
             onPointerDown={handleDrawPointerDown}
             onPointerMove={handleDrawPointerMove}
             onPointerUp={handleDrawPointerUp}
+            onPointerCancel={handleDrawPointerUp}
           />
         )}
 
