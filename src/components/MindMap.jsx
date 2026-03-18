@@ -57,10 +57,12 @@ function MindMapCanvas({ nodes: initNodes, edges: initEdges, onChange }) {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges ?? []);
   const [drawMode,     setDrawMode]     = useState(false);
   const [drawColorIdx, setDrawColorIdx] = useState(0);
-  const [livePoints,   setLivePoints]   = useState(null);
+  const [previewPath,  setPreviewPath]  = useState(null);
 
   const drawingRef    = useRef(null);
   const canvasRef     = useRef(null);
+  const drawColorRef  = useRef(drawColorIdx);
+  useEffect(() => { drawColorRef.current = drawColorIdx; }, [drawColorIdx]);
   const isFirstRender = useRef(true);
   const onChangeRef   = useRef(onChange);
 
@@ -178,21 +180,27 @@ function MindMapCanvas({ nodes: initNodes, edges: initEdges, onChange }) {
     e.currentTarget.setPointerCapture(e.pointerId);
     const pt = [e.clientX, e.clientY, e.pressure || 0.5];
     drawingRef.current = { pts: [pt] };
-    setLivePoints([pt]);
+    setPreviewPath(null);
   }, []);
 
   const handleDrawPointerMove = useCallback((e) => {
     if (!drawingRef.current) return;
     const pt = [e.clientX, e.clientY, e.pressure || 0.5];
     drawingRef.current.pts.push(pt);
-    setLivePoints([...drawingRef.current.pts]);
+    // Computa preview aqui (fora do render) usando o rect do canvas
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (rect) {
+      const pts = drawingRef.current.pts.map(([x, y, p]) => [x - rect.left, y - rect.top, p]);
+      const stroke = getStroke(pts, { size: 4, thinning: 0.5, smoothing: 0.5 });
+      setPreviewPath(svgPathFromStroke(stroke));
+    }
   }, []);
 
   const handleDrawPointerUp = useCallback(() => {
     if (!drawingRef.current) return;
     const { pts } = drawingRef.current;
     drawingRef.current = null;
-    setLivePoints(null);
+    setPreviewPath(null);
     if (pts.length < 2) return;
 
     // Converte pontos de tela para coordenadas do flow
@@ -218,20 +226,9 @@ function MindMapCanvas({ nodes: initNodes, edges: initEdges, onChange }) {
       type: 'mindDraw',
       position: { x: minX - pad, y: minY - pad },
       style: { width: boxW, height: boxH },
-      data: { strokes: [relativePts], boxW, boxH, color: DRAW_COLORS[drawColorIdx], size: 4 },
+      data: { strokes: [relativePts], boxW, boxH, color: DRAW_COLORS[drawColorRef.current], size: 4 },
     }]);
-  }, [drawColorIdx, screenToFlowPosition, setNodes]);
-
-  // Preview em coordenadas de tela (visualização imediata sem conversão)
-  const previewPath = livePoints
-    ? (() => {
-        const rect = canvasRef.current?.getBoundingClientRect();
-        if (!rect) return null;
-        const pts = livePoints.map(([x, y, p]) => [x - rect.left, y - rect.top, p]);
-        const stroke = getStroke(pts, { size: 4, thinning: 0.5, smoothing: 0.5 });
-        return svgPathFromStroke(stroke);
-      })()
-    : null;
+  }, [screenToFlowPosition, setNodes]);
 
   const isEmpty = nodes.length === 0;
 
