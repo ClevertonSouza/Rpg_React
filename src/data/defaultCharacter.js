@@ -58,4 +58,9 @@ export const defaultCharacter = {
   },
 
   notes: '',
+
+  mindMap: {
+    nodes: [],
+    edges: [],
+  },
 };

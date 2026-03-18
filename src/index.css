@@ -1043,3 +1043,488 @@ select.form-input:disabled {
   .pdf-import-grid { grid-template-columns: 1fr; }
   .selector-header-actions { gap: 6px; }
 }
+
+/* ═══════════════════════════════════════════════
+   NOTAS — header com abas
+═══════════════════════════════════════════════ */
+.notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.notes-mode-tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--section-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 7px;
+  padding: 3px;
+}
+
+.notes-mode-btn {
+  padding: 4px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8em;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.03em;
+  transition: all 0.15s;
+}
+.notes-mode-btn:hover { color: var(--text); }
+.notes-mode-btn.active {
+  background: var(--gold);
+  color: #0f0d0a;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════
+   MAPA MENTAL — container e toolbar
+═══════════════════════════════════════════════ */
+.mindmap-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mindmap-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mindmap-hint {
+  font-size: 0.75em;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.mindmap-canvas {
+  position: relative;
+  height: 520px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0a0a06;
+}
+
+.mindmap-loading {
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 0.9em;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+}
+
+/* Empty state (mostra por cima do canvas quando vazio) */
+.mindmap-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+  color: var(--text-dim);
+  text-align: center;
+}
+.mindmap-empty-icon { font-size: 2.2em; opacity: 0.4; }
+.mindmap-empty p { margin: 0; font-size: 0.85em; }
+.mindmap-empty-sub { font-size: 0.78em; opacity: 0.7; }
+
+/* ═══════════════════════════════════════════════
+   REACT FLOW — tema escuro
+═══════════════════════════════════════════════ */
+
+/* Fundo do canvas */
+.mindmap-canvas .react-flow__renderer { background: #0a0a06; }
+.mindmap-canvas .react-flow { background: #0a0a06; }
+
+/* Handles dos nós */
+.mindmap-canvas .react-flow__handle {
+  width: 9px !important;
+  height: 9px !important;
+  background: #b8960c !important;
+  border: 2px solid #0a0a06 !important;
+  border-radius: 50% !important;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.mindmap-canvas .react-flow__node:hover .react-flow__handle,
+.mindmap-canvas .react-flow__node.selected .react-flow__handle {
+  opacity: 1;
+}
+.mindmap-canvas .react-flow__handle:hover {
+  opacity: 1 !important;
+  width: 13px !important;
+  height: 13px !important;
+  box-shadow: 0 0 0 3px rgba(184,150,12,0.35) !important;
+}
+
+/* Edges */
+.mindmap-canvas .react-flow__edge-path {
+  stroke: #b8960c;
+  stroke-width: 1.8;
+}
+.mindmap-canvas .react-flow__edge.selected .react-flow__edge-path {
+  stroke: #e5c97a;
+  stroke-width: 2.2;
+}
+.mindmap-canvas .react-flow__connection-path {
+  stroke: #c9a84c;
+  stroke-width: 1.8;
+  stroke-dasharray: 5 3;
+}
+
+/* Controles (zoom) */
+.mindmap-canvas .react-flow__controls button {
+  background: #1a1a0f !important;
+  border: 1px solid #333 !important;
+  border-bottom-color: #222 !important;
+  color: var(--text) !important;
+  fill: var(--text) !important;
+}
+.mindmap-canvas .react-flow__controls button:hover {
+  background: #2a2a18 !important;
+}
+
+/* ═══════════════════════════════════════════════
+   MIND NODE — o bloco customizado
+═══════════════════════════════════════════════ */
+.mind-node {
+  width: 100%;
+  min-width: 110px;
+  min-height: 44px;
+  box-sizing: border-box;
+  border: 2px solid #b8960c;
+  border-radius: 8px;
+  padding: 10px 12px 6px;
+  background: rgba(184,150,12,0.07);
+  position: relative;
+  cursor: default;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.mind-node--selected {
+  box-shadow: 0 0 0 2px rgba(201,168,76,0.35);
+}
+
+.mind-node-label {
+  font-size: 0.82em;
+  color: var(--text);
+  margin: 0 0 4px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.45;
+  padding-right: 14px;
+  min-height: 1.2em;
+}
+
+.mind-node-placeholder {
+  font-style: italic;
+  opacity: 0.4;
+}
+
+.mind-node-textarea {
+  width: 100%;
+  min-height: 48px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.82em;
+  font-family: 'Crimson Text', Georgia, serif;
+  line-height: 1.45;
+  resize: none;
+  padding: 0;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.mind-node-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  justify-content: flex-end;
+  height: 16px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.mind-node:hover .mind-node-actions,
+.mind-node--selected .mind-node-actions {
+  opacity: 1;
+}
+
+.mind-node-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 1px 3px;
+  border-radius: 3px;
+  color: var(--text-dim);
+  transition: color 0.12s, background 0.12s;
+}
+.mind-node-action-btn:hover { background: rgba(255,255,255,0.07); }
+.mind-node-action-btn--active { opacity: 1; color: #c04a4a !important; }
+.mind-node-del:hover { color: #c04a4a !important; }
+
+/* ── Imagem dentro do bloco ── */
+.mind-node-image-wrap {
+  width: 100%;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+  line-height: 0;
+}
+.mind-node-image {
+  width: 100%;
+  max-height: 140px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+/* ── Painel de adicionar imagem ── */
+.mind-node-img-panel {
+  margin: 6px 0 4px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mind-node-img-tabs {
+  display: flex;
+  gap: 3px;
+}
+.mind-node-img-tab {
+  flex: 1;
+  padding: 2px 0;
+  border: 1px solid rgba(201,168,76,0.3);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.72em;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.mind-node-img-tab.active {
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+.mind-node-img-url-row {
+  display: flex;
+  gap: 4px;
+}
+.mind-node-img-input {
+  flex: 1;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 0.72em;
+  padding: 3px 6px;
+  outline: none;
+}
+.mind-node-img-input:focus { border-color: var(--gold); }
+.mind-node-img-ok {
+  padding: 3px 8px;
+  background: rgba(201,168,76,0.2);
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 4px;
+  color: var(--gold);
+  font-size: 0.72em;
+  cursor: pointer;
+}
+.mind-node-img-pick {
+  width: 100%;
+  padding: 5px;
+  background: rgba(201,168,76,0.08);
+  border: 1px dashed rgba(201,168,76,0.35);
+  border-radius: 4px;
+  color: var(--text-dim);
+  font-size: 0.72em;
+  cursor: pointer;
+  text-align: center;
+}
+.mind-node-img-pick:hover { background: rgba(201,168,76,0.14); color: var(--gold); }
+.mind-node-img-error {
+  font-size: 0.68em;
+  color: #c53030;
+}
+
+/* ═══════════════════════════════════════════════
+   MIND GROUP — agrupamento / subflow
+═══════════════════════════════════════════════ */
+
+/* React Flow precisa que o nó preencah 100% da área definida em style */
+.mindmap-canvas .react-flow__node-mindGroup {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  width: 100%;
+  height: 100%;
+}
+
+.mind-group {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed rgba(201,168,76,0.5);
+  border-radius: 8px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+  transition: border-color 0.15s;
+}
+.mind-group--selected {
+  box-shadow: 0 0 0 1px rgba(201,168,76,0.25);
+}
+
+.mind-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-bottom: 1px dashed rgba(201,168,76,0.3);
+  border-radius: 6px 6px 0 0;
+  background: rgba(201,168,76,0.08);
+  min-height: 26px;
+  cursor: default;
+  user-select: none;
+}
+.mind-group-title {
+  font-size: 0.75em;
+  font-family: 'Cinzel', serif;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mind-group-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--gold);
+  outline: none;
+  color: var(--gold);
+  font-size: 0.75em;
+  font-family: 'Cinzel', serif;
+  padding: 0;
+  letter-spacing: 0.04em;
+}
+.mind-group-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.mind-group-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  color: var(--text-dim);
+  transition: color 0.12s, background 0.12s;
+  line-height: 1;
+}
+.mind-group-action-btn:hover { background: rgba(255,255,255,0.07); }
+.mind-group-del:hover { color: #c04a4a !important; }
+
+/* ═══════════════════════════════════════════════
+   MIND EDGE — aresta customizada com label e setas
+═══════════════════════════════════════════════ */
+.mind-edge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.mind-edge-label-area {
+  background: transparent;
+  border-radius: 4px;
+  padding: 1px 4px;
+  cursor: pointer;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+.mind-edge-label-area--visible {
+  background: rgba(10,8,4,0.75);
+  border: 1px solid rgba(201,168,76,0.25);
+}
+.mind-edge-label-area:hover {
+  background: rgba(20,16,8,0.9) !important;
+}
+
+.mind-edge-label-text {
+  font-size: 0.75em;
+  color: var(--gold-light, #e5c97a);
+  font-family: 'Crimson Text', Georgia, serif;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+.mind-edge-label-hint {
+  font-size: 0.68em;
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+.mind-edge-input {
+  background: rgba(10,8,4,0.9);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  color: var(--gold-light, #e5c97a);
+  font-size: 0.75em;
+  font-family: 'Crimson Text', Georgia, serif;
+  padding: 2px 6px;
+  outline: none;
+  min-width: 80px;
+  max-width: 180px;
+}
+
+.mind-edge-controls {
+  display: flex;
+  gap: 2px;
+  background: rgba(10,8,4,0.88);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 5px;
+  padding: 2px 3px;
+}
+.mind-edge-ctrl-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--gold);
+  transition: background 0.12s;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.mind-edge-ctrl-btn:hover { background: rgba(201,168,76,0.12); }
+.mind-edge-ctrl-del:hover { color: #c04a4a !important; }

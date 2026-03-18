@@ -189,8 +189,13 @@ export default function App() {
           )}
           {activeTab === 'notas' && (
             <Notes
+              key={characterId}
               notes={char.notes}
               onChange={notes => updateChar({ ...char, notes })}
+              mindMap={char.mindMap ?? { nodes: [], edges: [] }}
+              onMindMapChange={(nodes, edges) =>
+                updateChar({ ...char, mindMap: { nodes, edges } })
+              }
             />
           )}
         </div>
