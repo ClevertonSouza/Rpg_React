@@ -79,14 +79,28 @@ body {
 .main-grid {
   display: grid;
   grid-template-columns: 300px 1fr;
+  grid-template-areas:
+    "left combat"
+    "left tabs";
   gap: 16px;
   padding: 20px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-.left-col,
-.right-col {
+.left-col {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.combat-section {
+  grid-area: combat;
+}
+
+.tabs-section {
+  grid-area: tabs;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -875,6 +889,10 @@ body {
 @media (max-width: 900px) {
   .main-grid {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "combat"
+      "left"
+      "tabs";
   }
 
   .combat-grid {

@@ -144,10 +144,13 @@ export default function App() {
           </div>
         </div>
 
-        {/* RIGHT COL */}
-        <div className="right-col">
+        {/* COMBAT */}
+        <div className="combat-section">
           <CombatStats char={char} onChange={updateChar} />
+        </div>
 
+        {/* TABS */}
+        <div className="tabs-section">
           {/* Tabs */}
           <div className="tabs">
             {TABS.map(tab => (
